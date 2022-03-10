@@ -1,5 +1,6 @@
 import UIKit
 
+//MARK: protocol Parkable 
 protocol Parkable {
     var plate: String { get }
     var type: VehicleType { get  }
@@ -30,6 +31,7 @@ struct Vehicle: Parkable, Hashable {
     }
 }
 
+// MARK: enum VehicleType - determines vehicle type and initial fee
 enum VehicleType {
     case car, moto, miniBus, bus
         
