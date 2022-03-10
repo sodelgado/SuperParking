@@ -1,9 +1,16 @@
 import UIKit
 
-//MARK: protocol Parkable 
+//MARK: protocol Parkable
+
+// MARK: Answer exercise 3.1:
+// As Vehicle implements Parkable protocol, the properties must be added in both
+// MARK: Answer exercise 3.2:
+// All data types can be optional
 protocol Parkable {
     var plate: String { get }
     var type: VehicleType { get  }
+    var checkInTime: Date { get }
+    var discountCard: String? { get }
 }
 
 
@@ -18,6 +25,10 @@ struct Parking {
 
 // MARK: Struct Vehicle - implements Hashable protocol, used to uniquely identify elements.
 struct Vehicle: Parkable, Hashable {
+    var discountCard: String?
+    
+    var checkInTime: Date
+    
     //    MARK: Answer exercise 2.2:
     //    type is a constant because Vehicle can't changes his VehicleType
     let type: VehicleType
