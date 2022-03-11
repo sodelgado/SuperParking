@@ -36,6 +36,17 @@ struct Parking {
         print("Welcome to SuperParking!")
     }
     
+// MARK: func checkOut - find vehicle plate and remove it when check out 
+    mutating func checkOut(_ plate: String, onSuccess: (Int) -> (), onError: () -> ()) {
+        guard let vehicle = vehicles.first(where: { $0.plate == plate }) else {
+            onError
+            print("Plate not found")
+            return
+        }
+        superParking.vehicles.remove(vehicle)
+        onSuccess(30)
+    }
+    
 }
 
 // MARK: Struct Vehicle - implements Hashable protocol, used to uniquely identify elements.
@@ -57,6 +68,7 @@ struct Vehicle: Parkable, Hashable {
         return lhs.plate == rhs.plate
     }
 }
+
 
 // MARK: enum VehicleType - determines vehicle type and initial fee
 //        Switch is used for flow control because it evaluates each case of the enum.
@@ -109,6 +121,7 @@ for vehicle in vehicles {
   superParking.checkInVehicle(vehicle) { successfulEntry in
     successfulEntry ? true:false }
 }
+
 
 
 
