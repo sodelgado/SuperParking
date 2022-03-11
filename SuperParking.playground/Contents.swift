@@ -97,18 +97,33 @@ let vehicle17 = Vehicle(plate: "YY453UU", type: VehicleType.miniBus, checkInTime
 let vehicle18 = Vehicle(plate: "OO111QQ", type: VehicleType.bus, checkInTime: Date(), discountCard: nil)
 let vehicle19 = Vehicle(plate: "RR666EE", type: VehicleType.moto, checkInTime: Date(), discountCard: "DISCOUNT_CARD_009")
 let vehicle20 = Vehicle(plate: "RR666EE", type: VehicleType.car, checkInTime: Date(), discountCard: nil)
-
 let vehicle21 = Vehicle(plate: "GGG11MA", type: VehicleType.bus, checkInTime: Date(), discountCard: nil)
 let vehicle22 = Vehicle(plate: "QQ77DE", type: VehicleType.miniBus, checkInTime: Date(), discountCard: "DISCOUNT_CARD_010")
 
-//MARK: Insertion of vehicles in the array vehicles
-let vehicles = [ vehicle1, vehicle2, vehicle3, vehicle4, vehicle5, vehicle6, vehicle7, vehicle8, vehicle9, vehicle10, vehicle11, vehicle12, vehicle13, vehicle14, vehicle15, vehicle16, vehicle17, vehicle18, vehicle19, vehicle20, vehicle21, vehicle22]
+//MARK: Vehicles checkIn
+superParking.checkInVehicle(vehicle1) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle2) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle3) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle4) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle5) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle6) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle7) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle8) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle9) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle10) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle11) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle12) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle13) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle14) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle15) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle16) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle17) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle18) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle19) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle20) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle21) { successfulEntry in successfulEntry ? true:false }
+superParking.checkInVehicle(vehicle22) { successfulEntry in successfulEntry ? true:false }
 
-//MARK: Vehicles CheckIn
-for vehicle in vehicles {
-  superParking.checkInVehicle(vehicle) { successfulEntry in
-    successfulEntry ? true:false }
-}
 
 
 
