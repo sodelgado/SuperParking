@@ -23,10 +23,19 @@ protocol Parkable {
 // Why is it defined as a set? -> because it doesn't allow repeating values
 struct Parking {
     var vehicles: Set<Vehicle> = []
+    let maxVehicles: Int = 20
     
-    mutating func checkInVehicle(_ vehicle: Vehicle, onFinish: (Bool) -> Void) {
-
+//    MARK: func checkInVehicle - validates the maximum number of vehicles in the parking lot and that the license plate is not duplicated
+    mutating func checkInVehicle(_ vehicle: Vehicle, onFinish: (Bool) -> Void){
+        guard vehicles.count < maxVehicles, vehicles.insert(vehicle).inserted else {
+            onFinish(false)
+            print("Sorry, the check-in failed")
+            return
+        }
+        onFinish(true)
+        print("Welcome to SuperParking!")
     }
+    
 }
 
 // MARK: Struct Vehicle - implements Hashable protocol, used to uniquely identify elements.
@@ -53,7 +62,7 @@ struct Vehicle: Parkable, Hashable {
 //        Switch is used for flow control because it evaluates each case of the enum.
 enum VehicleType {
     case car, moto, miniBus, bus
-        
+    
     var feeForType: Int {
         switch self{
         case .car: return 20
@@ -66,33 +75,41 @@ enum VehicleType {
 
 // MARK: Instances are created and added to the Parking set
 var superParking = Parking()
-let car = Vehicle(plate: "AA111AA", type: VehicleType.car,
-checkInTime: Date(), discountCard: "DISCOUNT_CARD_001")
-let moto = Vehicle(plate: "B222BBB", type:
-VehicleType.moto, checkInTime: Date(), discountCard: nil)
-let miniBus = Vehicle(plate: "CC333CC", type:
-VehicleType.miniBus, checkInTime: Date(), discountCard: nil)
-let bus = Vehicle(plate: "DD444DD", type: VehicleType.bus,
-checkInTime: Date(), discountCard: "DISCOUNT_CARD_002")
-superParking.vehicles.insert(car)
-superParking.vehicles.insert(moto)
-superParking.vehicles.insert(miniBus)
-superParking.vehicles.insert(bus)
- 
-// MARK: verify that the inserts were successful for console
-//print(superParking.vehicles.insert(car).inserted)  // true
-//print(superParking.vehicles.insert(moto).inserted)  // true
-//print(superParking.vehicles.insert(miniBus).inserted)// true
-//print(superParking.vehicles.insert(bus).inserted)  // true
 
-//MARK: verify the values are not duplicated
-//let car = Vehicle(plate: "AA111AA", type: VehicleType.car,
-//checkInTime: Date(), discountCard: "DISCOUNT_CARD_001")
-//let car2 = Vehicle(plate: "AA111AA", type: VehicleType.car,
-//checkInTime: Date(), discountCard: "DISCOUNT_CARD_003")
-//print(superParking.vehicles.insert(car).inserted)  // true
-//print(superParking.vehicles.insert(car2).inserted)  // false
+//MARK: Entry of vehicles for checkIn validation
+let vehicle1 = Vehicle(plate: "AA111AA", type: VehicleType.car, checkInTime: Date(), discountCard: "DISCOUNT_CARD_001")
+let vehicle2 = Vehicle(plate: "B222BBB", type: VehicleType.moto, checkInTime: Date(), discountCard: nil)
+let vehicle3 = Vehicle(plate: "CC333CC", type: VehicleType.miniBus, checkInTime: Date(), discountCard: nil)
+let vehicle4 = Vehicle(plate: "DD444DD", type: VehicleType.bus, checkInTime: Date(), discountCard: "DISCOUNT_CARD_002")
+let vehicle5 = Vehicle(plate: "AA111BB", type: VehicleType.car, checkInTime: Date(), discountCard: "DISCOUNT_CARD_003")
+let vehicle6 = Vehicle(plate: "B222CCC", type: VehicleType.moto, checkInTime: Date(), discountCard: "DISCOUNT_CARD_004")
+let vehicle7 = Vehicle(plate: "CC333DD", type: VehicleType.miniBus, checkInTime: Date(), discountCard: nil)
+let vehicle8 = Vehicle(plate: "DD444EE", type: VehicleType.bus, checkInTime: Date(), discountCard: "DISCOUNT_CARD_005")
+let vehicle9 = Vehicle(plate: "AA111CC", type: VehicleType.car, checkInTime: Date(), discountCard: nil)
+let vehicle10 = Vehicle(plate: "B222DDD", type: VehicleType.moto, checkInTime: Date(), discountCard: nil)
+let vehicle11 = Vehicle(plate: "CC333EE", type: VehicleType.miniBus, checkInTime: Date(), discountCard: nil)
+let vehicle12 = Vehicle(plate: "DD444GG", type: VehicleType.bus, checkInTime: Date(), discountCard: "DISCOUNT_CARD_006")
+let vehicle13 = Vehicle(plate: "AA111DD", type: VehicleType.car, checkInTime: Date(), discountCard: "DISCOUNT_CARD_007")
+let vehicle14 = Vehicle(plate: "B222EEE", type: VehicleType.moto, checkInTime: Date(), discountCard: nil)
+let vehicle15 = Vehicle(plate: "CC333FF", type: VehicleType.miniBus, checkInTime: Date(), discountCard: nil)
+let vehicle16 = Vehicle(plate: "TT888PP", type: VehicleType.car, checkInTime: Date(), discountCard: "DISCOUNT_CARD_08")
+let vehicle17 = Vehicle(plate: "YY453UU", type: VehicleType.miniBus, checkInTime: Date(), discountCard: nil)
+let vehicle18 = Vehicle(plate: "OO111QQ", type: VehicleType.bus, checkInTime: Date(), discountCard: nil)
+let vehicle19 = Vehicle(plate: "RR666EE", type: VehicleType.moto, checkInTime: Date(), discountCard: "DISCOUNT_CARD_009")
+let vehicle20 = Vehicle(plate: "RR666EE", type: VehicleType.car, checkInTime: Date(), discountCard: nil)
 
-// MARK: verify that can be removed
-//superParking.vehicles.remove(moto)
+let vehicle21 = Vehicle(plate: "GGG11MA", type: VehicleType.bus, checkInTime: Date(), discountCard: nil)
+let vehicle22 = Vehicle(plate: "QQ77DE", type: VehicleType.miniBus, checkInTime: Date(), discountCard: "DISCOUNT_CARD_010")
+
+//MARK: Insertion of vehicles in the array vehicles
+let vehicles = [ vehicle1, vehicle2, vehicle3, vehicle4, vehicle5, vehicle6, vehicle7, vehicle8, vehicle9, vehicle10, vehicle11, vehicle12, vehicle13, vehicle14, vehicle15, vehicle16, vehicle17, vehicle18, vehicle19, vehicle20, vehicle21, vehicle22]
+
+//MARK: Vehicles CheckIn
+for vehicle in vehicles {
+  superParking.checkInVehicle(vehicle) { successfulEntry in
+    successfulEntry ? true:false }
+}
+
+
+
 
