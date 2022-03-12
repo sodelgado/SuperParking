@@ -1,7 +1,6 @@
 import UIKit
 
 //MARK: protocol Parkable
-
 // MARK: Answer exercise 3.1:
 // As Vehicle implements Parkable protocol, the properties must be added in both
 // MARK: Answer exercise 3.2:
@@ -36,15 +35,30 @@ struct Parking {
         print("Welcome to SuperParking!")
     }
     
-// MARK: func checkOut - find vehicle plate and remove it when check out 
+// MARK: func checkOut - find vehicle plate and remove it when check out
     mutating func checkOut(_ plate: String, onSuccess: (Int) -> (), onError: () -> ()) {
         guard let vehicle = vehicles.first(where: { $0.plate == plate }) else {
-            onError
+//            onError
             print("Plate not found")
             return
         }
         superParking.vehicles.remove(vehicle)
         onSuccess(30)
+    }
+    
+    //MARK: Exercise 8
+    mutating func calculateFee(type: VehicleType, parkedTime: Int) -> Int {
+        let fixedValue = type.feeForType
+        if parkedTime > 120 {
+            let fee = (Double(parkedTime) - 120) / 15
+            if fee.truncatingRemainder(dividingBy: 15) == 0 {
+                return (Int(fee * 5) + fixedValue)
+            } else{
+                return (((Int(fee) * 5) + 5) + fixedValue)
+            }
+        } else{
+            return fixedValue
+        }
     }
     
 }
@@ -123,6 +137,9 @@ for vehicle in vehicles {
 }
 
 
-
+// MARK: verifying that calculateFee works correctly with the values ​​provided in the PDF
+print(superParking.calculateFee(type: vehicle1.type, parkedTime: 198))
+print(superParking.calculateFee(type: vehicle1.type, parkedTime: 193))
+print(superParking.calculateFee(type: vehicle4.type, parkedTime: 134))
 
 
