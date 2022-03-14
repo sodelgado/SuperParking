@@ -13,6 +13,8 @@ protocol Parkable {
 struct Parking {
     var vehicles: Set<Vehicle> = [] // Property vehicles - it stores parked vehicles
     let maxVehicles: Int = 20       // Determines the maximum number of vehicles in the parking lot
+    // MARK: Answer exercise 11.1
+    var outVehicle: (numberOfVehicles: Int, profitsReceived: Int) = (0,0) // Tuple that accumulates the number of vehicles withdrawn and fee received
     
     // MARK: func checkInVehicle
     mutating func checkInVehicle(_ vehicle: Vehicle, onFinish: (Bool) -> Void) {
@@ -31,11 +33,13 @@ struct Parking {
             onError()
             return
         }
-        
-        // MARK: EJERCICIO 10
-        // It must be verified if the discount card is empty
         let fee = calculateFee(type: vehicle.type, parkedTime: vehicle.parkedTime, hasDiscountCard: vehicle.discountCard != nil)
         vehicles.remove(vehicle)
+
+        // MARK: Exercise 11.2.2
+        // Tuple accumulates the data to later be obtained in the earnings function
+        outVehicle.numberOfVehicles += 1
+        outVehicle.profitsReceived += fee
         onSuccess(fee)
     }
     
@@ -57,6 +61,12 @@ struct Parking {
         finalValue = Double(feeValue) * 0.85
         }
         return Int(finalValue)
+    }
+    
+    // MARK: Exercise 11.2.1
+    // MARK: func earnings
+    func earnings(){
+        print("\n\(outVehicle.numberOfVehicles) vehicles have ckecked out and have earnings of $\(outVehicle.profitsReceived)")
     }
 }
 
@@ -131,3 +141,13 @@ for vehicle in vehicles {
 // check-out applied to a specific vehicle
 superParking.checkOutVehicle(plate: vehicle20.plate, onSuccess: { fee in print("\nYour fee is \(fee). Come back soon")},
                              onError: {print("\nSorry, the ckeck-out failed")})
+
+superParking.checkOutVehicle(plate: vehicle18.plate, onSuccess: { fee in print("\nYour fee is \(fee). Come back soon")},
+                             onError: {print("\nSorry, the ckeck-out failed")})
+
+superParking.checkOutVehicle(plate: vehicle8.plate, onSuccess: { fee in print("\nYour fee is \(fee). Come back soon")},
+                             onError: {print("\nSorry, the ckeck-out failed")})
+
+// MARK: print earnings
+// Print record of total vehicles that are removed from the parking lot, along with the total earnings received, through the earnings function that obtains its data from the checkout
+superParking.earnings()
