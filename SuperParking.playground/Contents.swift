@@ -24,6 +24,19 @@ struct Parking {
         onFinish(true)
         print("Welcome to SuperParking!")
     }
+    
+    // MARK: Answer exercise 7
+    // The checkout function must be mutating because being inside a struct it is assumed that it is immutable by default
+    // MARK: func checkOutVehicle
+    // Find vehicle plate and remove it when check out
+    mutating func checkOutVehicle(_ plate: String, onSuccess: (Int) -> (), onError: () -> ()) {
+        guard let vehicle = vehicles.first(where: { $0.plate == plate }) else {
+            onError()
+            return
+        }
+        vehicles.remove(vehicle)
+        onSuccess(30)
+    }
 }
 
 // MARK: struct Vehicle
@@ -46,7 +59,7 @@ struct Vehicle: Parkable, Hashable {
 // MARK: enum VehicleType
 enum VehicleType {
     case car, moto, miniBus, bus
-  
+    
     var feeForType: Int {
         switch self{
         case .car: return 20
@@ -60,7 +73,7 @@ enum VehicleType {
 // MARK: Parking set
 var superParking = Parking()
 
-// MARK: Entry of vehicles for checkIn validation
+// MARK: Entry of vehicles for check-In validation
 let vehicle1 = Vehicle(plate: "AA111AA", type: VehicleType.car, checkInTime: Date(), discountCard: "DISCOUNT_CARD_001")
 let vehicle2 = Vehicle(plate: "B222BBB", type: VehicleType.moto, checkInTime: Date(), discountCard: nil)
 let vehicle3 = Vehicle(plate: "CC333CC", type: VehicleType.miniBus, checkInTime: Date(), discountCard: nil)
@@ -84,13 +97,10 @@ let vehicle20 = Vehicle(plate: "RR666EE", type: VehicleType.car, checkInTime: Da
 let vehicle21 = Vehicle(plate: "GGG11MA", type: VehicleType.bus, checkInTime: Date(), discountCard: nil)
 let vehicle22 = Vehicle(plate: "QQ77DE", type: VehicleType.miniBus, checkInTime: Date(), discountCard: "DISCOUNT_CARD_010")
 
-// MARK: Answer exercise 6.2
 // MARK: Insertion of vehicles in the array vehicles
 let vehicles = [vehicle1, vehicle2, vehicle3, vehicle4, vehicle5, vehicle6, vehicle7, vehicle8, vehicle9, vehicle10, vehicle11, vehicle12, vehicle13, vehicle14, vehicle15, vehicle16, vehicle17, vehicle18, vehicle19, vehicle20, vehicle21, vehicle22]
 
-// MARK: Answer exercise 6.3
 // MARK: Vehicles Check-In
 for vehicle in vehicles {
-  superParking.checkInVehicle(vehicle) { successfulEntry in
-    successfulEntry ? true:false }
+  superParking.checkInVehicle(vehicle) { successfulEntry in successfulEntry ? true:false }
 }
