@@ -1,38 +1,29 @@
 import UIKit
 
-//MARK: protocol Parkable
-
 // MARK: Answer exercise 3.1:
 // As Vehicle implements Parkable protocol, the properties must be added in both
 // MARK: Answer exercise 3.2:
 // All data types can be optional
+
+// MARK: protocol Parkable
 protocol Parkable {
     var plate: String { get }
-    var type: VehicleType { get  }
+    var type: VehicleType { get }
     var checkInTime: Date { get }
     var discountCard: String? { get }
 }
 
-
-// MARK: struct Parking - represents the parking
+// MARK: struct Parking
 struct Parking {
-    // Property vehicles - it stores parked vehicles
-    // MARK: Aswer exercise 1:
-    // Why is it defined as a set? -> because it doesn't allow repeating values
-    
-    var vehicles: Set<Vehicle> = []
+    var vehicles: Set<Vehicle> = [] // Property vehicles - it stores parked vehicles
 }
 
-// MARK: Struct Vehicle - implements Hashable protocol, used to uniquely identify elements.
+// MARK: struct Vehicle
 struct Vehicle: Parkable, Hashable {
-    var discountCard: String?
-    
-    var checkInTime: Date
-    
-    //    MARK: Answer exercise 2.2:
-    //    type is a constant because Vehicle can't changes his VehicleType
-    let type: VehicleType
-    let plate: String // Corresponds to the license plate of the vehicle.
+    let plate: String           // Corresponds to the license plate of the vehicle.
+    let type: VehicleType       // Corresponds to the type of the vehicle
+    var checkInTime: Date       // Corresponds to the date of entry of the vehicle
+    var discountCard: String?   // Corresponds to an optional vehicle discount card
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(plate)
@@ -42,12 +33,11 @@ struct Vehicle: Parkable, Hashable {
     }
 }
 
-// MARK: enum VehicleType - determines vehicle type and initial fee
+// MARK: enum VehicleType
 enum VehicleType {
     case car, moto, miniBus, bus
         
     var feeForType: Int {
-//        Switch is used for flow control because it evaluates each case of the enum.
         switch self{
         case .car: return 20
         case .moto: return 15
@@ -56,3 +46,4 @@ enum VehicleType {
         }
     }
 }
+
