@@ -34,32 +34,30 @@ struct Parking {
         }
         let fee = calculateFee(type: vehicle.type, parkedTime: vehicle.parkedTime, hasDiscountCard: vehicle.discountCard != nil)
         vehicles.remove(vehicle)
+
         outVehicle.numberOfVehicles += 1
         outVehicle.profitsReceived += fee
         onSuccess(fee)
     }
     
-    // MARK: func calculateFee
-    func calculateFee(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
-        let fixedValue = type.feeForType
-        var finalFee: Int
+    mutating func calculateFee(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
+        var finalValue: Double = 0.0
+        let feeValue = calculateFeeAccordingTime(type: type, parkedTime: parkedTime)
         
-        if parkedTime > 120 {
-            let fee = (Double(parkedTime) - 120) / 15
-            if fee.truncatingRemainder(dividingBy: 15) == 0 {
-                finalFee = (Int(fee * 5) + fixedValue)
-            } else{
-                finalFee = (((Int(fee) * 5) + 5) + fixedValue)
+        func calculateFeeAccordingTime(type: VehicleType, parkedTime: Int) -> Int {
+            var feeValue = type.feeForType
+            guard parkedTime < 120 else {
+              let mins = (Double(parkedTime) - 120) / 15
+              feeValue += Int(ceil(mins) * 5.0)
+              return feeValue
             }
-        } else{
-            finalFee = fixedValue
-        }
+            return feeValue
+          }
         
         if hasDiscountCard {
-            return Int(Double(finalFee) * 0.85)
-        } else{
-            return finalFee
+        finalValue = Double(feeValue) * 0.85
         }
+        return Int(finalValue)
     }
     
     // MARK: func earnings
@@ -138,9 +136,9 @@ let vehicles = [vehicle1, vehicle2, vehicle3, vehicle4, vehicle5, vehicle6, vehi
 
 // MARK: Vehicles Check-In
 for vehicle in vehicles {
-  superParking.checkInVehicle(vehicle) { successfulEntry in
-    successfulEntry ? true:false }
+  superParking.checkInVehicle(vehicle) { successfulEntry in successfulEntry ? true:false }
 }
+
 
 // MARK: Vehicles Check-out
 // check-out applied to a specific vehicle
@@ -159,7 +157,4 @@ superParking.earnings()
 // MARK: list of vehicles plate
 // List the license plates of vehicles that are in the parking lot
 superParking.listVehicles()
-
-
-
 
