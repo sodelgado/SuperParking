@@ -37,28 +37,49 @@ struct Parking {
     
     // MARK: func calculateFee
     // MARK: Answer exercise 9.1
-    func calculateFee(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
-        let fixedValue = type.feeForType
-        var finalFee: Int
+//    func calculateFee2(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
+//        let fixedValue = type.feeForType
+//        var finalFee: Int
+//
+//        if parkedTime > 120 {
+//            let fee = (Double(parkedTime) - 120) / 15
+//            if fee.truncatingRemainder(dividingBy: 15) == 0 {
+//                finalFee = (Int(fee * 5) + fixedValue)
+//            } else{
+//                finalFee = (((Int(fee) * 5) + 5) + fixedValue)
+//            }
+//        } else {
+//            finalFee = fixedValue
+//        }
+//
+//        // MARK: Answer exercise 9.2
+//        if hasDiscountCard {
+//            return Int(Double(finalFee) * 0.85)
+//        } else{
+//            return finalFee
+//        }
+//    }
+    
+    mutating func calculateFee(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
+        var finalValue: Double = 0.0
+        let feeValue = calculateFeeAccordingTime(type: type, parkedTime: parkedTime)
         
-        if parkedTime > 120 {
-            let fee = (Double(parkedTime) - 120) / 15
-            if fee.truncatingRemainder(dividingBy: 15) == 0 {
-                finalFee = (Int(fee * 5) + fixedValue)
-            } else{
-                finalFee = (((Int(fee) * 5) + 5) + fixedValue)
+        func calculateFeeAccordingTime(type: VehicleType, parkedTime: Int) -> Int {
+            var feeValue = type.feeForType
+            guard parkedTime < 120 else {
+              let mins = (Double(parkedTime) - 120) / 15
+              feeValue += Int(ceil(mins) * 5.0)
+              return feeValue
             }
-        } else{
-            finalFee = fixedValue
-        }
+            return feeValue
+          }
         
-        // MARK: Answer exercise 9.2
         if hasDiscountCard {
-            return Int(Double(finalFee) * 0.85)
-        } else{
-            return finalFee
+        finalValue = Double(feeValue) * 0.85
         }
+        return Int(finalValue)
     }
+    
 }
 
 // MARK: struct Vehicle
@@ -132,7 +153,9 @@ for vehicle in vehicles {
 // Verify that the vehicle has a discount card
 print("\nDiscount Card: \(vehicle1.discountCard ?? "")")
 // Apply the fee calculation to a vehicle included parameter hasDiscountCard
+
 print("Fee: \(superParking.calculateFee(type: vehicle1.type, parkedTime: vehicle1.parkedTime, hasDiscountCard: vehicle1.discountCard != nil))")
+//print("Fee: \(superParking.calculateFee2(type: vehicle1.type, parkedTime: vehicle1.parkedTime, hasDiscountCard: vehicle1.discountCard != nil))")
+print("Fee: \(superParking.calculateFee(type: vehicle1.type, parkedTime: 198, hasDiscountCard: vehicle1.discountCard != nil))")
 
-
-
+//print("Fee: \(superParking.calculateFee2(type: vehicle1.type, parkedTime: 198, hasDiscountCard: vehicle1.discountCard != nil))")
