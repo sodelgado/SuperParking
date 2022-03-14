@@ -12,13 +12,10 @@ protocol Parkable {
 // MARK: struct Parking
 struct Parking {
     var vehicles: Set<Vehicle> = [] // Property vehicles - it stores parked vehicles
-    // MARK: Answer exercise 5.1
     let maxVehicles: Int = 20       // Determines the maximum number of vehicles in the parking lot
     
     // MARK: func checkInVehicle
-    // Validates the maximum number of vehicles in the parking lot and that the license plate is not duplicated
     mutating func checkInVehicle(_ vehicle: Vehicle, onFinish: (Bool) -> Void) {
-        // MARK: exercise 5.2
         guard vehicles.count < maxVehicles, vehicles.insert(vehicle).inserted else {
             onFinish(false)
             print("Sorry, the check-in failed")
@@ -63,7 +60,7 @@ enum VehicleType {
 // MARK: Parking set
 var superParking = Parking()
 
-//MARK: Entry of vehicles for checkIn validation
+// MARK: Entry of vehicles for checkIn validation
 let vehicle1 = Vehicle(plate: "AA111AA", type: VehicleType.car, checkInTime: Date(), discountCard: "DISCOUNT_CARD_001")
 let vehicle2 = Vehicle(plate: "B222BBB", type: VehicleType.moto, checkInTime: Date(), discountCard: nil)
 let vehicle3 = Vehicle(plate: "CC333CC", type: VehicleType.miniBus, checkInTime: Date(), discountCard: nil)
@@ -87,26 +84,13 @@ let vehicle20 = Vehicle(plate: "RR666EE", type: VehicleType.car, checkInTime: Da
 let vehicle21 = Vehicle(plate: "GGG11MA", type: VehicleType.bus, checkInTime: Date(), discountCard: nil)
 let vehicle22 = Vehicle(plate: "QQ77DE", type: VehicleType.miniBus, checkInTime: Date(), discountCard: "DISCOUNT_CARD_010")
 
-// MARK: Vehicles check-In
-superParking.checkInVehicle(vehicle1) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle2) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle3) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle4) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle5) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle6) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle7) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle8) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle9) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle10) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle11) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle12) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle13) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle14) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle15) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle16) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle17) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle18) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle19) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle20) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle21) { successfulEntry in successfulEntry ? true:false }
-superParking.checkInVehicle(vehicle22) { successfulEntry in successfulEntry ? true:false }
+// MARK: Answer exercise 6.2
+// MARK: Insertion of vehicles in the array vehicles
+let vehicles = [vehicle1, vehicle2, vehicle3, vehicle4, vehicle5, vehicle6, vehicle7, vehicle8, vehicle9, vehicle10, vehicle11, vehicle12, vehicle13, vehicle14, vehicle15, vehicle16, vehicle17, vehicle18, vehicle19, vehicle20, vehicle21, vehicle22]
+
+// MARK: Answer exercise 6.3
+// MARK: Vehicles Check-In
+for vehicle in vehicles {
+  superParking.checkInVehicle(vehicle) { successfulEntry in
+    successfulEntry ? true:false }
+}
