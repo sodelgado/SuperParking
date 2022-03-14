@@ -71,9 +71,7 @@ struct Parking {
     // MARK: func listVehicles
     func listVehicles(){
         print("\n*** List of plates in the parking lot ***")
-        for mySet in vehicles {
-            print("Plate: \(mySet.plate)")
-        }
+        vehicles.map { print("Plate: \($0.plate)") }
     }
 }
 
