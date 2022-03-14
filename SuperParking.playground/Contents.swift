@@ -104,8 +104,3 @@ let vehicles = [vehicle1, vehicle2, vehicle3, vehicle4, vehicle5, vehicle6, vehi
 for vehicle in vehicles {
   superParking.checkInVehicle(vehicle) { successfulEntry in successfulEntry ? true:false }
 }
-
-
-
-
-
