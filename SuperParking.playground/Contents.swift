@@ -40,25 +40,47 @@ struct Parking {
         onSuccess(fee)
     }
     
-    mutating func calculateFee(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
-        var finalValue: Double = 0.0
-        let feeValue = calculateFeeAccordingTime(type: type, parkedTime: parkedTime)
+    // MARK: func calculateFee
+    func calculateFee(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
+        let fixedValue = type.feeForType
+        var finalFee: Int
         
-        func calculateFeeAccordingTime(type: VehicleType, parkedTime: Int) -> Int {
-            var feeValue = type.feeForType
-            guard parkedTime < 120 else {
-              let mins = (Double(parkedTime) - 120) / 15
-              feeValue += Int(ceil(mins) * 5.0)
-              return feeValue
+        if parkedTime > 120 {
+            let fee = (Double(parkedTime) - 120) / 15
+            if fee.truncatingRemainder(dividingBy: 15) == 0 {
+                finalFee = (Int(fee * 5) + fixedValue)
+            } else{
+                finalFee = (((Int(fee) * 5) + 5) + fixedValue)
             }
-            return feeValue
-          }
+        } else{
+            finalFee = fixedValue
+        }
         
         if hasDiscountCard {
-        finalValue = Double(feeValue) * 0.85
+            return Int(Double(finalFee) * 0.85)
+        } else{
+            return finalFee
         }
-        return Int(finalValue)
     }
+//    mutating func calculateFee(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
+//        var finalValue: Double = 0.0
+//        let feeValue = calculateFeeAccordingTime(type: type, parkedTime: parkedTime)
+//
+//        if hasDiscountCard {
+//        finalValue = Double(feeValue) * 0.85
+//        }
+//        return Int(finalValue)
+//    }
+//
+//    mutating func calculateFeeAccordingTime(type: VehicleType, parkedTime: Int) -> Int {
+//        var feeValue = type.feeForType
+//        guard parkedTime < 120 else {
+//          let mins = (Double(parkedTime) - 120) / 15
+//          feeValue += Int(ceil(mins) * 5.0)
+//          return feeValue
+//        }
+//        return feeValue
+//      }
     
     // MARK: func earnings
     func earnings(){
