@@ -1,27 +1,27 @@
 import UIKit
 
+// MARK: protocol Parkable
 protocol Parkable {
     var plate: String { get }
 }
 
-
-// MARK: struct Parking - represents the parking
+// MARK: struct Parking
+// Represents the parking
 struct Parking {
-    // Property vehicles - it stores parked vehicles
-    // MARK: Aswer exercise 1:
+    // MARK: Answer exercise 1:
     // Why is it defined as a set? -> because it doesn't allow repeating values
-
-    var vehicles: Set<Vehicle> = []
+    var vehicles: Set<Vehicle> = [] // Property vehicles - it stores parked vehicles
 }
 
-// MARK: Struct Vehicle - implements Hashable protocol, used to uniquely identify elements.
+// MARK: struct Vehicle
+// Implements Hashable protocol, used to uniquely identify elements.
 struct Vehicle: Parkable, Hashable {
-    let plate: String // Corresponds to the license plate of the vehicle.
+    let plate: String       // Corresponds to the license plate of the vehicle.
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(plate)
     }
     static func ==(lhs: Vehicle, rhs: Vehicle) -> Bool {
             return lhs.plate == rhs.plate
-        }
     }
+}
