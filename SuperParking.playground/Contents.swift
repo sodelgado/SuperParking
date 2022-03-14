@@ -49,7 +49,7 @@ struct Vehicle: Parkable, Hashable {
 // MARK: enum VehicleType
 enum VehicleType {
     case car, moto, miniBus, bus
-    
+  
     var feeForType: Int {
         switch self{
         case .car: return 20
@@ -110,4 +110,3 @@ superParking.checkInVehicle(vehicle19) { successfulEntry in successfulEntry ? tr
 superParking.checkInVehicle(vehicle20) { successfulEntry in successfulEntry ? true:false }
 superParking.checkInVehicle(vehicle21) { successfulEntry in successfulEntry ? true:false }
 superParking.checkInVehicle(vehicle22) { successfulEntry in successfulEntry ? true:false }
-
