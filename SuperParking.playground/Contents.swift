@@ -25,8 +25,6 @@ struct Parking {
         print("Welcome to SuperParking!")
     }
     
-    // MARK: Answer exercise 7
-    // The checkout function must be mutating because being inside a struct it is assumed that it is immutable by default
     // MARK: func checkOutVehicle
     // Find vehicle plate and remove it when check out
     mutating func checkOutVehicle(_ plate: String, onSuccess: (Int) -> (), onError: () -> ()) {
@@ -36,6 +34,21 @@ struct Parking {
         }
         vehicles.remove(vehicle)
         onSuccess(30)
+    }
+
+    //MARK: Exercise 8
+    mutating func calculateFee(type: VehicleType, parkedTime: Int) -> Int {
+        let fixedValue = type.feeForType
+        if parkedTime > 120 {
+            let fee = (Double(parkedTime) - 120) / 15
+            if fee.truncatingRemainder(dividingBy: 15) == 0 {
+                return (Int(fee * 5) + fixedValue)
+            } else{
+                return (((Int(fee) * 5) + 5) + fixedValue)
+            }
+        } else{
+            return fixedValue
+        }
     }
 }
 
@@ -104,3 +117,8 @@ let vehicles = [vehicle1, vehicle2, vehicle3, vehicle4, vehicle5, vehicle6, vehi
 for vehicle in vehicles {
   superParking.checkInVehicle(vehicle) { successfulEntry in successfulEntry ? true:false }
 }
+
+// MARK: verifying that calculateFee works correctly with the values ​​provided in the PDF
+print(superParking.calculateFee(type: vehicle1.type, parkedTime: 198))
+print(superParking.calculateFee(type: vehicle1.type, parkedTime: 193))
+print(superParking.calculateFee(type: vehicle4.type, parkedTime: 134))
