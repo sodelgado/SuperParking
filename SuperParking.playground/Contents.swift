@@ -12,6 +12,7 @@ protocol Parkable {
 // MARK: struct Parking
 struct Parking {
     var vehicles: Set<Vehicle> = [] // Property vehicles - it stores parked vehicles
+
     let maxVehicles: Int = 20       // Determines the maximum number of vehicles in the parking lot
     
     // MARK: func checkInVehicle
@@ -23,6 +24,7 @@ struct Parking {
         }
         onFinish(true)
         print("Welcome to SuperParking!")
+
     }
 }
 
@@ -46,7 +48,7 @@ struct Vehicle: Parkable, Hashable {
 // MARK: enum VehicleType
 enum VehicleType {
     case car, moto, miniBus, bus
-    
+
     var feeForType: Int {
         switch self{
         case .car: return 20
@@ -94,8 +96,4 @@ for vehicle in vehicles {
   superParking.checkInVehicle(vehicle) { successfulEntry in
     successfulEntry ? true:false }
 }
-
-
-
-
 
