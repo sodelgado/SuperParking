@@ -26,17 +26,21 @@ struct Parking {
     }
     
     // MARK: func checkOutVehicle
-    mutating func checkOutVehicle(_ plate: String, onSuccess: (Int) -> (), onError: () -> ()) {
+    mutating func checkOutVehicle(plate: String, onSuccess: (Int) -> (), onError: () -> ()) {
         guard let vehicle = vehicles.first(where: { $0.plate == plate }) else {
             onError()
             return
         }
+        
+        // MARK: EJERCICIO 10
+        // It must be verified if the discount card is empty
+        let fee = calculateFee(type: vehicle.type, parkedTime: vehicle.parkedTime, hasDiscountCard: vehicle.discountCard != nil)
         vehicles.remove(vehicle)
-        onSuccess(30)
+        onSuccess(fee)
+        
     }
     
     // MARK: func calculateFee
-    // MARK: Answer exercise 9.1
     func calculateFee(type: VehicleType, parkedTime: Int, hasDiscountCard: Bool) -> Int {
         let fixedValue = type.feeForType
         var finalFee: Int
@@ -52,7 +56,6 @@ struct Parking {
             finalFee = fixedValue
         }
         
-        // MARK: Answer exercise 9.2
         if hasDiscountCard {
             return Int(Double(finalFee) * 0.85)
         } else{
@@ -128,11 +131,12 @@ for vehicle in vehicles {
     successfulEntry ? true:false }
 }
 
-// MARK: Rate calculation applied to a specific vehicle and check if it have a discount card
-// Verify that the vehicle has a discount card
-print("\nDiscount Card: \(vehicle1.discountCard ?? "")")
-// Apply the fee calculation to a vehicle included parameter hasDiscountCard
-print("Fee: \(superParking.calculateFee(type: vehicle1.type, parkedTime: vehicle1.parkedTime, hasDiscountCard: vehicle1.discountCard != nil))")
+// MARK: Vehicles Check-out
+// check-out applied to a specific vehicle
+superParking.checkOutVehicle(plate: vehicle20.plate, onSuccess: { fee in print("\nYour fee is \(fee). Come back soon")},
+                             onError: {print("\nSorry, the ckeck-out failed")})
+
+
 
 
 
